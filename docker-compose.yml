@@ -1,0 +1,41 @@
+version: '3'
+
+services:
+  dante:
+    image: vimagick/dante
+    container_name: dante
+    ports:
+      - "1088:1080"
+    volumes:
+      - "./dante-entrypoint.sh:/dante-entrypoint.sh"
+      - ./sockd.conf:/etc/sockd.conf
+    environment:
+      - CFGFILE=/etc/sockd.conf
+      - PIDFILE=/tmp/sockd.pid
+      - WORKERS=10
+    restart: always
+    command: bash /dante-entrypoint.sh
+
+  openvpn-server:
+    image: umputun/dockvpn
+    container_name: openvpn
+    cap_add: 
+      - NET_ADMIN
+    ports:
+      - "1194:1194/udp"
+      - "443:443/tcp"
+    volumes:
+      - openvpn:/etc/openvpn
+    command: run
+  openvpn-key-server:
+    image: umputun/dockvpn
+    container_name: openvpn-key-server
+    ports:
+      - "8088:8080"
+    volumes:
+      - openvpn:/etc/openvpn
+    command: serveconfig
+
+volumes:
+  openvpn:
+
