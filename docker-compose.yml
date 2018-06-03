@@ -23,7 +23,7 @@ services:
       - NET_ADMIN
     ports:
       - "1194:1194/udp"
-      - "8443:443/tcp"
+      - "443:443/tcp"
     volumes:
       - openvpn:/etc/openvpn
     command: run
@@ -37,7 +37,7 @@ services:
       - openvpn:/etc/openvpn
     command: serveconfig
 
-  telegram-proxy:
+  mtproxy:
     image: telegrammessenger/proxy:latest
     ports:
       - "9443:443" #Proxy port
