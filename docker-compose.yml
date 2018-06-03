@@ -23,10 +23,11 @@ services:
       - NET_ADMIN
     ports:
       - "1194:1194/udp"
-      - "443:443/tcp"
+      - "8443:443/tcp"
     volumes:
       - openvpn:/etc/openvpn
     command: run
+
   openvpn-key-server:
     image: umputun/dockvpn
     container_name: openvpn-key-server
@@ -36,6 +37,18 @@ services:
       - openvpn:/etc/openvpn
     command: serveconfig
 
+  telegram-proxy:
+      image: telegrammessenger/proxy:latest
+       ports:
+         - "9443:443" #Proxy port
+         #- "2398:2398" # ONLY FOR TESTING - Show proxy stats on port 2398 outside of docker
+       volumes:
+          - "mtproxy-config:/data"
+       restart: unless-stopped
+       env_file:
+          - ./mtproxy-config.env
+
 volumes:
   openvpn:
+  mtproxy-config:
 

@@ -15,3 +15,15 @@ There are default ports in a file 'docker-compose' - 1088/tcp, 1194/udp, 443/tcp
 * get openvpn configuration file ```wget  https://localhost:8088/ --no-check-certificate --output-document key.ovpn```
 
 For checking socks5 ```curl -x socks5h://suck-rkn:telegram@127.0.0.1:1088 https://www.youtube.com```
+
+# Hiding multiply port for one
+Full information: [sslh habr guide](https://habr.com/post/412779/)
+
+```
+sudo apt-get install --no-install-recommends sslh
+```
+choose the second variant
+
+```
+sudo sslh-select -f --listen IP:443 --openvpn 127.0.0.1:8443 --anyprot 127.0.0.1:9443
+```
