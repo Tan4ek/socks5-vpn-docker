@@ -25,5 +25,9 @@ sudo apt-get install --no-install-recommends sslh
 choose the second variant
 
 ```
-sudo sslh-select -f --listen IP:443 --openvpn 127.0.0.1:8443 --anyprot 127.0.0.1:9443
+sudo sslh-select -f -p 127.0.0.1:443 --openvpn 127.0.0.1:8443 --anyprot 127.0.0.1:9443 --pidfile /var/run/sslh/sslh.pid
 ```
+
+Change ```/etc/default/sslh```:
+RUN=yes
+DAEMON_OPTS= copy all arguments from previous command 'sudo sslh-select'
