@@ -16,26 +16,16 @@ services:
     restart: always
     command: bash /dante-entrypoint.sh
 
-  openvpn-server:
-    image: umputun/dockvpn
+  openvpn:
+    cap_add:
+     - NET_ADMIN
+    image: kylemanna/openvpn
     container_name: openvpn
-    cap_add: 
-      - NET_ADMIN
     ports:
-      - "1194:1194/udp"
-      - "443:443/tcp"
+     - "1194:1194/udp"
+    restart: always
     volumes:
-      - openvpn:/etc/openvpn
-    command: run
-
-  openvpn-key-server:
-    image: umputun/dockvpn
-    container_name: openvpn-key-server
-    ports:
-      - "8088:8080"
-    volumes:
-      - openvpn:/etc/openvpn
-    command: serveconfig
+     - ./openvpn-data/conf:/etc/openvpn
 
   mtproxy:
     image: telegrammessenger/proxy:latest
@@ -49,6 +39,5 @@ services:
       - ./mtproxy-config.env
 
 volumes:
-  openvpn:
   mtproxy-config:
 
