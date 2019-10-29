@@ -18,5 +18,6 @@ For checking socks5 ```curl -x socks5h://suck-rkn:telegram@127.0.0.1:1088 https:
 
 
 # mtproxy (MTProto Proxy)
-For geting a mtproxy secret keys read logs from ```docker-compose logs mtproxy```
-and find a line like ```Secret X: YYY.....``` YYY is your key for a mtproxy 
+You should generate some random 32 hex strings ([for example here](https://www.browserling.com/tools/random-hex)) and define them in [config_mtproxy_server.py](config_mtproxy_server.py#L4).
+After docker container up you could read secret keys from ```docker-compose logs mtproxy```
+and find a line like ```tg: YYY.....``` YYY is your key for a mtproxy
