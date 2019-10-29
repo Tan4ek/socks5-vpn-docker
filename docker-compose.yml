@@ -1,8 +1,9 @@
 version: '3'
 
 services:
+  # https://github.com/vimagick/dockerfiles
   dante:
-    image: vimagick/dante
+    image: vimagick/dante:latest
     container_name: dante
     ports:
       - "1088:1080"
@@ -13,31 +14,28 @@ services:
       - CFGFILE=/etc/sockd.conf
       - PIDFILE=/tmp/sockd.pid
       - WORKERS=10
-    restart: always
+    restart: unless-stopped
     command: bash /dante-entrypoint.sh
 
+  # https://github.com/kylemanna/docker-openvpn
   openvpn:
     cap_add:
      - NET_ADMIN
-    image: kylemanna/openvpn
+    image: kylemanna/openvpn:latest
     container_name: openvpn
     ports:
      - "1194:1194/udp"
-    restart: always
+    restart: unless-stopped
     volumes:
      - ./openvpn-data/conf:/etc/openvpn
 
+  # https://github.com/alexbers/mtprotoproxy
   mtproxy:
-    image: telegrammessenger/proxy:latest
+    image: alexbers/mtprotoproxy:stable
+    container_name: mtproxy
     ports:
-      - "9443:443" #Proxy port
-      #- "2398:2398" # ONLY FOR TESTING - Show proxy stats on port 2398 outside of docker
+      - "443:443" # internal port define in config_mtproxy_server.py -> PORT
     volumes:
-      - "mtproxy-config:/data"
+      - ./config_mtproxy_server.py:/home/tgproxy/config.py
+      - ./mtprotoproxy.py:/home/tgproxy/mtprotoproxy.py
     restart: unless-stopped
-    env_file:
-      - ./mtproxy-config.env
-
-volumes:
-  mtproxy-config:
-
