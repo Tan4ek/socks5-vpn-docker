@@ -1,8 +1,8 @@
-if [ $(grep -c 'suck-rkn' /etc/passwd) -eq 0 ]; then
-	echo "Creating user: suck-rkn"
+if [ $(grep -c "$SOCKS_USERNAME" /etc/passwd) -eq 0 ]; then
+	echo "Creating user: $SOCKS_USERNAME"
 
-	useradd suck-rkn
-	echo 'suck-rkn:telegram' | chpasswd
+	useradd "$SOCKS_USERNAME"
+	echo "$SOCKS_USERNAME:$SOCKS_PASSWORD" | chpasswd
 fi
 
 sockd -f $CFGFILE -p $PIDFILE -N $WORKERS

@@ -3,8 +3,6 @@ This is just a combination of [dante](https://github.com/vimagick/dockerfiles/tr
 Docker compose socks5 and vpn server
 
 # Configuration
-In a file 'dante-entrypoint.sh' you can find username and password for SOCKS5 (in an example username is 'suck-rkn', password is 'telegram')
-'sockd.conf' have all configuration for dante-server (SOCKS5)
 There are default ports in a file 'docker-compose' - 1088/tcp, 1194/udp, 443/tcp for OpenVPN, 8088/tcp, 9443/tcp/udp (actualy I don't know udp or tcp and I opened them all) for MTProto proxy - which must be opened
 
 # How to run
@@ -15,6 +13,10 @@ There are default ports in a file 'docker-compose' - 1088/tcp, 1194/udp, 443/tcp
 * ```docker-compose up -d```
 
 For checking socks5 ```curl -x socks5h://suck-rkn:telegram@127.0.0.1:1088 https://www.youtube.com```
+
+# socks proxy
+In [docker-compse](docker-compose.yml#L17) define `SOCKS_USERNAME`, `SOCKS_PASSWORD` for SOCKS5 proxy.
+`sockd.conf` have all configuration for dante-server (SOCKS5)
 
 
 # mtproxy (MTProto Proxy)

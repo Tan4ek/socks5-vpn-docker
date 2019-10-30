@@ -14,6 +14,8 @@ services:
       - CFGFILE=/etc/sockd.conf
       - PIDFILE=/tmp/sockd.pid
       - WORKERS=10
+      - SOCKS_USERNAME=suck-rkn
+      - SOCKS_PASSWORD=telegram
     restart: unless-stopped
     command: bash /dante-entrypoint.sh
 
