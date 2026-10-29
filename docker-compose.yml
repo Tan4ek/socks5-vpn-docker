@@ -14,8 +14,8 @@ services:
       - CFGFILE=/etc/sockd.conf
       - PIDFILE=/tmp/sockd.pid
       - WORKERS=10
-      - SOCKS_USERNAME=suck-rkn
-      - SOCKS_PASSWORD=telegram
+      - SOCKS_USERNAME=${SOCKS_USERNAME:?Set SOCKS_USERNAME before starting the proxy}
+      - SOCKS_PASSWORD=${SOCKS_PASSWORD:?Set SOCKS_PASSWORD before starting the proxy}
     restart: unless-stopped
     command: bash /dante-entrypoint.sh
 
